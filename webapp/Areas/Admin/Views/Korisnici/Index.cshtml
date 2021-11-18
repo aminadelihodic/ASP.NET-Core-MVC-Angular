@@ -1,0 +1,82 @@
+﻿@model IEnumerable<rentacar.Models.ApplicationUser>
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Korisnici";
+    var user = await UserManager.GetUserAsync(User);
+}
+<section class="section-lg bg-default">
+    <div class="container">
+        <h4 class="title-block">@ViewData["Title"]</h4>
+        <div class="row row-sm row-30">
+
+            <p>
+                <a asp-action="Create" class="btn btn-primary">Unesi korisnika</a>
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SlikaProfilaUrl)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Ime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Prezime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Telefon)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @if (item.SlikaProfilaUrl == null)
+                                {
+                                    <img src="~/images/default-profile-picture.png" class="profilna-slika" />
+                                }
+                                else
+                                {
+                                    <img src="/@item.SlikaProfilaUrl" class="profilna-slika" />
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Ime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Prezime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Telefon)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Uredi</a>
+                                @if (item.Id == user.Id)
+                                {
+                                    <button class="btn " disabled style=" cursor: no-drop; pointer-events: none; ">Obriši</button>
+                                }
+                                else
+                                {
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Obriši</a>
+                                }
+                                <a asp-controller="UserRoles" asp-action="Manage" asp-route-id="@item.Id" class="btn btn-primary">Uloge</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,57 @@
+﻿@model rentacar.Models.Slika
+
+@{
+    ViewData["Title"] = "Uredi slike";
+}
+
+<section class="section-lg bg-default">
+    <div class="container">
+        <h4 class="title-block">@ViewData["Title"]</h4>
+        <div class="row row-sm row-30">
+
+            <div class="row" style="margin: 0 auto;">
+                <div class="col-md-12">
+                    <form asp-action="Edit" ajax-poziv="da" ajax-rezultat="slikeContainer" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="form-group">
+                            <label for="SlikaUpload" class="control-label">Slika</label>
+                            <img id="Slika" src="/@Model.Url" style="width: 300px; cursor: pointer;" class="d-block m-auto" />
+                            <input type="file" id="SlikaUpload" name="SlikaUpload" required class="d-none" />
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Spasi" class="btn btn-primary" />
+                            <a asp-action="Index" asp-route-id="@Model.AutomobilId" class="btn" ajax-poziv="da" ajax-rezultat="slikeContainer">Nazad</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--<div>
+    <a asp-action="Index" asp-route-id="@Model.AutomobilId" class="btn" ajax-poziv="da" ajax-rezultat="slikeContainer">Nazad</a>
+</div> -->
+
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#Slika').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#SlikaUpload").change(function () {
+        readURL(this);
+    });
+    $("#Slika").click(function () {
+        $("#SlikaUpload").trigger('click');
+    });
+</script>

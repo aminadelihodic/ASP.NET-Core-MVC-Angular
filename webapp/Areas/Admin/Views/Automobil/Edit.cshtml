@@ -1,0 +1,112 @@
+﻿@model AutomobiliDodajVM
+
+@{
+    ViewData["Title"] = "Uredi automobil";
+}
+
+
+    <section class="section-lg bg-default">
+        <div class="container">
+            <h4 class="title-block">@ViewData["Title"]</h4>
+
+            <form asp-action="Edit">
+                <div class="row row-sm row-30">
+
+
+                    <div class="row" style="margin: 0 auto;">
+                        <div class="col-md-12">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Automobil.Id" />
+                            <div class="form-group">
+                                <label asp-for="Automobil.Naziv" class="control-label"></label>
+                                <input asp-for="Automobil.Naziv" class="form-control" />
+                                <span asp-validation-for="Automobil.Naziv" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Automobil.Opis" class="control-label"></label>
+                                <input asp-for="Automobil.Opis" class="form-control" />
+                                <span asp-validation-for="Automobil.Opis" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Automobil.IznosZarade" class="control-label"></label>
+                                <input asp-for="Automobil.IznosZarade" class="form-control" />
+                                <span asp-validation-for="Automobil.IznosZarade" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Automobil.Cijena" class="control-label"></label>
+                                <input type="number" asp-for="Automobil.Cijena" class="form-control" />
+                                <span asp-validation-for="Automobil.Cijena" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Automobil.KategorijaID" class="control-label"></label>
+                                <select asp-for="Automobil.KategorijaID" class="form-control" asp-items="ViewBag.KategorijaID"></select>
+                                <span asp-validation-for="Automobil.KategorijaID" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Automobil.ProizvodjacID" class="control-label"></label>
+                                <select asp-for="Automobil.ProizvodjacID" class="form-control" asp-items="ViewBag.ProizvodjacID"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 75%; margin: 0 auto;">
+                        <div class="col-md-12">
+                            <table class="table table-bordered text-left">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">Karakteristike automobila</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @{
+                                        int i = 0;
+                                    }
+
+                                    @foreach (var item in Model.DetaljiKarakteristika)
+                                    {
+                                        @if (i % 3 == 0)@Html.Raw("<tr>");
+                                    <td>
+                                        @if (item.Oznaceno)
+                                        {
+                                            <input checked type="checkbox" id="OznaceneKarakteristike_@item.DetaljiKarakteristikaId" name="OznaceneKarakteristike[]" value="@item.DetaljiKarakteristikaId" />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="OznaceneKarakteristike_@item.DetaljiKarakteristikaId" name="OznaceneKarakteristike[]" value="@item.DetaljiKarakteristikaId" />
+                                        }
+                                        <label for="OznaceneKarakteristike_@item.DetaljiKarakteristikaId">@item.Naziv</label>
+                                    </td>
+
+                                    @if (i % 3 == 2)@Html.Raw("</tr>");
+                                    i++;
+                                }
+                                    </tbody>
+                                </table>
+
+                                <div class="form-group">
+                                    <input type="submit" value="Spasi" class="btn btn-primary" />
+                                    <a asp-action="Index" class="btn btn-primary">Nazad</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
+                <div id="slikeContainer" style="margin-top: 100px">
+
+                </div>
+            </div>
+    </section>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+        <script>
+    $.get("/Admin/Slike/Index/@Model.Automobil.Id", function (response) {
+        $('#slikeContainer').html(response);
+    })
+        </script>
+    }

@@ -1,0 +1,194 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+<head>
+    <title>@ViewData["Title"] - rentacar</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <!-- Stylesheets-->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CTeko:300,400,500%7CMaven+Pro:500">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/fonts.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 10]>
+    <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;"><a href="https://windows.microsoft.com/en-US/internet-explorer/"><img src="images/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
+    <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="preloader loaded">
+        <div class="preloader-body">
+            <div class="cssload-container">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+    </div>
+    <div class="page">
+        <!-- Page Header-->
+        <header class="section page-header">
+            <!-- RD Navbar-->
+            <div class="rd-navbar-wrap">
+                <nav class="rd-navbar rd-navbar-corporate" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="106px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+                    <div class="rd-navbar-collapse-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle=".rd-navbar-collapse"><span></span></div>
+
+                    <div class="rd-navbar-main-outer">
+                        <div class="rd-navbar-main">
+                            <div class="rd-navbar-nav-wrap">
+                                <partial name="_LoginPartial" />
+                                <!-- RD Navbar Nav-->
+                                <ul class="rd-navbar-nav">
+                                    <li class="rd-nav-item active">
+                                        <a class="rd-nav-link" href="/">Home</a>
+                                    </li>
+                                    <li class="rd-nav-item">
+                                        <a class="rd-nav-link" href="car-categories.html">Automobili</a>
+                                        <!-- RD Navbar Dropdown-->
+                                        <ul class="rd-menu rd-navbar-dropdown">
+                                            <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="" asp-controller="Automobili" asp-action="Index">Naši Automobili</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="rd-nav-item">
+                                        <a class="rd-nav-link" asp-action="Index" asp-controller="Vijesti">Novosti</a>
+                                    </li>
+                                    <li class="rd-nav-item">
+                                        <a class="rd-nav-link" asp-action="Index" asp-controller="WishList">Wishlist</a>
+                                    </li>
+                                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                                    {
+
+                                        <li class="rd-nav-item">
+                                            <a class="rd-nav-link" href="#">Admin Tools</a>
+                                            <!-- RD Navbar Dropdown-->
+                                            <ul class="rd-menu rd-navbar-dropdown">
+                                                <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="Admin" asp-controller="Korisnici" asp-action="Index">Korisnici</a></li>
+                                                <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="Admin" asp-controller="Izvjestaj" asp-action="Index">Izvještaj</a></li>
+                                                <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="Admin" asp-controller="RoleManager" asp-action="Index">Uloge</a></li>
+                                                <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="Admin" asp-controller="Automobil" asp-action="Index">Automobili</a></li>
+                                                <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="Admin" asp-controller="Proizvodjaci" asp-action="Index">Proizvođači</a></li>
+                                                <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="Admin" asp-controller="DetaljiKarakteristika" asp-action="Index">Detalji karakteristika</a></li>
+                                                <li class="rd-nav-item"><a class="rd-dropdown-link"  asp-controller="Vijesti" asp-action="Index">Vijesti </a></li>
+                                            </ul>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        @RenderBody()
+
+        <!-- Page Footer-->
+        <footer class="section footer-corporate footer-corporate-2 bg-gray-800">
+            <div class="footer-corporate-inset">
+                <div class="container">
+                    <div class="row row-40 justify-content-lg-between">
+                        <div class="col-sm-6 col-md-12 col-lg-3 col-xl-4">
+                            <div class="oh-desktop">
+                                <div class="wow slideInRight" data-wow-delay="0s">
+                                    <h6 class="text-spacing-100 rd-range-title">About Us</h6>
+                                    <ul class="footer-contacts d-inline-block d-sm-block">
+                                        <li>
+                                            <div class="unit">
+                                                <div class="unit-left"><span class="icon fa fa-phone"></span></div>
+                                                <div class="unit-body"><a class="link-phone" href="tel:#">+1 323-913-4688</a></div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="unit">
+                                                <div class="unit-left"><span class="icon fa fa-envelope"></span></div>
+                                                <div class="unit-body"><a class="link-aemail" href="mailto:#">info@demolink.org</a></div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="unit">
+                                                <div class="unit-left"><span class="icon fa fa-location-arrow"></span></div>
+                                                <div class="unit-body"><a class="link-location" href="#">4730 Crystal Springs Dr, Los Angeles, CA 90027</a></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-5 col-lg-3 col-xl-4">
+                            <div class="oh-desktop">
+                                <div class="wow slideInDown" data-wow-delay="0s">
+                                    <h6 class="text-spacing-100 rd-range-title">Popular news</h6>
+                                    <!-- Post Minimal 2-->
+                                    <article class="post post-minimal-2">
+                                        <p class="post-minimal-2-title"><a href="#">Most Common Dashboard Warning Lights</a></p>
+                                        <div class="post-minimal-2-time">
+                                            <time datetime="2018-05-04">May 04, 2018</time>
+                                        </div>
+                                    </article>
+                                    <!-- Post Minimal 2-->
+                                    <article class="post post-minimal-2">
+                                        <p class="post-minimal-2-title"><a href="#">Car Rental Bookings - Mobile vs Desktop</a></p>
+                                        <div class="post-minimal-2-time">
+                                            <time datetime="2018-05-04">May 04, 2018</time>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-11 col-md-7 col-lg-5 col-xl-4">
+                            <div class="oh-desktop">
+                                <div class="wow slideInLeft" data-wow-delay="0s">
+                                    <h6 class="text-spacing-100 rd-range-title">Quick links</h6>
+                                    <ul class="row-6 list-0 list-marked list-marked-md list-custom-2 list-marked-third">
+                                        <li><a href="#">Our Cars</a></li>
+                                        <li><a href="#">Blog</a></li>
+                                        <li><a href="#">Services</a></li>
+                                        <li><a href="#">Get in Touch</a></li>
+                                    </ul>
+                                    <div class="group-md group-middle justify-content-sm-start"><a class="button button-primary button-md" href="#">Find a car</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-corporate-bottom-panel">
+                <div class="container">
+                    <div class="row row-10 align-items-md-center">
+                        <div class="col-sm-6 col-md-4 text-sm-right text-md-center">
+                            <div>
+                                <ul class="list-inline list-inline-sm footer-social-list-2">
+                                    <li><a class="icon fa fa-facebook" href="#"></a></li>
+                                    <li><a class="icon fa fa-twitter" href="#"></a></li>
+                                    <li><a class="icon fa fa-google-plus" href="#"></a></li>
+                                    <li><a class="icon fa fa-instagram" href="#"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 order-sm-first">
+                            <!-- Rights-->
+                            <p class="rights">
+                                <span>&copy;&nbsp;</span><span class="copyright-year"></span> <span>Rent Car</span>. All rights reserved
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-md-4 text-md-right">
+                            <p class="rights"><a href="privacy-policy.html">Privacy Policy</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- Global Mailform Output-->
+    <div class="snackbars" id="form-output-global"></div>
+    <!-- Javascript-->
+    <script src="/js/core.min.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/JFIT.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<rentacar.Models.Slika>
+
+@{
+    ViewData["Title"] = "Slike";
+}
+
+
+<h4>@ViewData["Title"]</h4>
+
+<p>
+    <a asp-action="Create" asp-route-id="@ViewBag.AutomobilId" class="btn" ajax-poziv="da" ajax-rezultat="slikeContainer">Nova slika</a>
+</p>
+<table class="table" style="width: 600px; margin: 0 auto">
+    <thead>
+        <tr>
+            <th>
+                Slika
+            </th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <img src="/@item.Url" style="max-height: 200px; max-width: 300px" />
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn" ajax-poziv="da" ajax-rezultat="slikeContainer">Uredi</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn" ajax-poziv="da" ajax-rezultat="slikeContainer">Obriši</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

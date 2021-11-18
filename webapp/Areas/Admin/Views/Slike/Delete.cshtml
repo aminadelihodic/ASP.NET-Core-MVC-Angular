@@ -1,0 +1,18 @@
+﻿@model rentacar.Models.Slika
+@{
+    ViewData["Title"] = "Brisanje slike";
+}
+
+
+<h4 style="margin-bottom: 28px;">@ViewData["Title"]</h4>
+
+<h3>Da li ste sigurni da želite izbrisati sliku?</h3>
+<div>
+    <hr />
+
+    <form asp-action="Delete" ajax-poziv="da" ajax-rezultat="slikeContainer">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Obriši" class="btn btn-danger" />
+        <a asp-action="Index" asp-route-id="@Model.AutomobilId" class="btn" ajax-poziv="da" ajax-rezultat="slikeContainer">Nazad</a>
+    </form>
+</div>

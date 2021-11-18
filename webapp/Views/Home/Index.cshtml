@@ -1,0 +1,107 @@
+﻿@using rentacar.ViewModels
+@model IznajmljivanjeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+
+<section class="ftco-section ftco-no-pt bg-light">
+    <div class="container ">
+        <div class="row no-gutters">
+            <div class="col-md-12	featured-top">
+                <div class="row no-gutters">
+                    <div class="col-md-4 d-flex align-items-center">
+                        <div class="request-form ftco-animate bg-primary col-lg-10">
+                            @using (Html.BeginForm("Add", "Rent", FormMethod.Post))
+                            {
+
+                                <h2>Make your trip</h2>
+
+                                <div class="d-flex flex-column">
+                                    <div class="form-group ">
+                                        <label asp-for="@Model.fromDate" class="label"></label>
+                                        <input type="date" class="form-control" id="datepicker2" asp-for="@Model.fromDate" placeholder="Date">
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="@Model.ToDate" class="label"></label>
+                                        <input type="date" class="form-control" id="datepicker" asp-for="@Model.ToDate" placeholder="Date">
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label asp-for="Cars" class="label"></label>
+                                        <select class="form-control" asp-for="@Model.CarId" asp-items="@Model.Cars" style="color:blue">
+                                            <option value="0" selected>Pick car for rent...</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-secondary py-3 px-4" @(!User.Identity.IsAuthenticated ? "disabled" : "" )>@(!User.Identity.IsAuthenticated ? "Login first" : "Rent")</button>
+                                </div>}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-lg bg-default">
+    <div class="container">
+        <h4 class="title-block">Welcome</h4>
+        <div class="row row-sm row-30">
+            <div class="col-sm-6 col-lg-4 text-left">
+                <!-- Thumbnail Modern-->
+                <figure class="thumbnail thumbnail-simple wow slideInUp" style="visibility: visible; animation-name: slideInUp;">
+                    <a class="thumbnail-img" href="classic-car-page.html"><img src="images/hover-effects-2-1-370x303.jpg" alt="" width="370" height="303"></a>
+                    <figcaption class="heading heading-5"><a href="classic-car-page.html">Audi</a></figcaption>
+                    <p class="description gray-500">From $125 per day</p>
+                </figure>
+            </div>
+            <div class="col-sm-6 col-lg-4 text-left">
+                <!-- Thumbnail Modern-->
+                <figure class="thumbnail thumbnail-simple wow slideInUp" style="visibility: visible; animation-name: slideInUp;">
+                    <a class="thumbnail-img" href="classic-car-page.html"><img src="images/hover-effects-2-2-370x303.jpg" alt="" width="370" height="303"></a>
+                    <figcaption class="heading heading-5"><a href="classic-car-page.html">Porsche</a></figcaption>
+                    <p class="description gray-500">From $150 per day</p>
+                </figure>
+            </div>
+            <div class="col-sm-6 col-lg-4 text-left">
+                <!-- Thumbnail Modern-->
+                <figure class="thumbnail thumbnail-simple wow slideInUp" style="visibility: visible; animation-name: slideInUp;">
+                    <a class="thumbnail-img" href="classic-car-page.html"><img src="images/hover-effects-2-3-370x303.jpg" alt="" width="370" height="303"></a>
+                    <figcaption class="heading heading-5"><a href="classic-car-page.html">Tesla</a></figcaption>
+                    <p class="description gray-500">From $130 per day</p>
+                </figure>
+            </div>
+            <div class="col-sm-6 col-lg-4 text-left">
+                <!-- Thumbnail Modern-->
+                <figure class="thumbnail thumbnail-simple wow slideInUp" style="visibility: visible; animation-name: slideInUp;">
+                    <a class="thumbnail-img" href="classic-car-page.html"><img src="images/hover-effects-2-4-370x303.jpg" alt="" width="370" height="303"></a>
+                    <figcaption class="heading heading-5"><a href="classic-car-page.html">Mercedes-Benz</a></figcaption>
+                    <p class="description gray-500">From $170 per day</p>
+                </figure>
+            </div>
+            <div class="col-sm-6 col-lg-4 text-left">
+                <!-- Thumbnail Modern-->
+                <figure class="thumbnail thumbnail-simple wow slideInUp" style="visibility: visible; animation-name: slideInUp;">
+                    <a class="thumbnail-img" href="classic-car-page.html"><img src="images/hover-effects-2-5-370x303.jpg" alt="" width="370" height="303"></a>
+                    <figcaption class="heading heading-5"><a href="classic-car-page.html">MINI</a></figcaption>
+                    <p class="description gray-500">From $110 per day</p>
+                </figure>
+            </div>
+            <div class="col-sm-6 col-lg-4 text-left">
+                <!-- Thumbnail Modern-->
+                <figure class="thumbnail thumbnail-simple wow slideInUp" style="visibility: visible; animation-name: slideInUp;">
+                    <a class="thumbnail-img" href="classic-car-page.html"><img src="images/hover-effects-2-6-370x303.jpg" alt="" width="370" height="303"></a>
+                    <figcaption class="heading heading-5"><a href="classic-car-page.html">MG</a></figcaption>
+                    <p class="description gray-500">From $160 per day</p>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+</section>

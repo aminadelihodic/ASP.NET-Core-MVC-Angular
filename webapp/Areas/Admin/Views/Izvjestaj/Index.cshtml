@@ -1,0 +1,59 @@
+﻿@model IzvjestajVM
+@using System.Text.Json; 
+
+@{
+    ViewData["Title"] = "Izvještaj o zaradi";
+}
+
+<h4 style="margin-top: 10px;">@ViewData["Title"]</h4>
+
+
+
+<div style="width: 100%; padding: 20px;">
+    <form method="post">
+        Od:
+        <input asp-for="DatumOd"/>
+        Do:
+        <input asp-for="DatumDo"/>
+        <button class="btn btn-primary" style="
+        height: 30px;
+        padding: 10px;
+        background: rgb(255, 99, 132);
+        line-height: 8px;
+        border: 0;
+        ">Odaberi</button>
+    </form>
+
+    <canvas id="myChart" width="520" height="420" style="margin: 0 auto;"></canvas>
+</div>
+
+@section Scripts{
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(JsonSerializer.Serialize(Model.Labels)),
+                datasets: [{
+                    label: 'Zarada od iznajmljenih vozila',
+                    data: @Html.Raw(JsonSerializer.Serialize(Model.Zarada)),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                    ]
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+}

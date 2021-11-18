@@ -1,0 +1,203 @@
+﻿@model List<Automobil>
+@{
+    ViewData["Title"] = "Pregled automobila";
+    var ProizvodjaciList = (List<Proizvodjac>)ViewData["Proizvodjaci"];
+    var ProizvodjaciFilter = (string)ViewData["ProizvodjaciFilter"];
+}
+
+<div class="holder">
+    <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
+        <div class="modal-dialog float-right" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title emailModalLabel">Email</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form method="post" action="/Automobili/SendEmail">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Sender:</label>
+                            <input type="text" class="form-control recipient-name" name="ccMail" placeholder="person@mail.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Reciever:</label>
+                            <p id="mail_message"></p>
+                            <input type="hidden" name="emailTo" id="mail_id" />
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Content:</label>
+                            <textarea class="form-control message-text" name="message"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-outline-info">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Breadcrumbs -->
+<section class="breadcrumbs-custom-inset">
+    <div class="breadcrumbs-custom context-dark bg-overlay-60">
+        <div class="container">
+            <h2 class="breadcrumbs-custom-title">Naši automobili</h2>
+            <ul class="breadcrumbs-custom-path">
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="active">Naši automobili</li>
+            </ul>
+        </div>
+        <div class="box-position" style="background-image: url(/images/bg-cars.jpg);"></div>
+    </div>
+</section>
+<section class="section section-xl bg-default text-md-left section-our-cars">
+    <div class="container">
+        <div class="row row-70">
+            <div class="col-lg-8">
+                <!-- Post Classic-->
+                @foreach (var item in Model)
+                {
+                <article class="post post-classic">
+                    <h5 class="post-classic-title title-block">
+                        <a asp-action="Detalji" asp-route-id="@item.Id">@item.Naziv</a>
+                    </h5>
+                    <div class="post-classic-panel group-middle justify-content-start">
+                        <a class="badge badge-primary" href="#">
+                            <svg xmlns="https://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="27px" viewbox="0 0 16 27" enable-background="new 0 0 16 27" xml:space="preserve">
+                            <path d="M0,0v6c4.142,0,7.5,3.358,7.5,7.5S4.142,21,0,21v6h16V0H0z"></path>
+                                </svg>
+                            <div>@CijenaHelper.Formatiraj(item.Cijena) po danu</div>
+                        </a>
+                        <div class="post-classic-meta">
+                            <div class="post-meta-icon material-icons-directions_car"></div>
+                            <div class="post-meta-text">auto</div>
+                        </div>
+                        <div class="post-classic-meta">
+                            <div class="post-meta-icon material-icons-toys"></div>
+                            <div class="post-meta-text">conditioning</div>
+                        </div>
+                        <div class="post-classic-meta">
+                            <div class="post-meta-icon material-icons-person"></div>
+                            <div class="post-meta-text">4</div>
+                        </div>
+                        <div class="post-classic-meta">
+                            <div class="post-meta-icon material-icons-work"></div>
+                            <div class="post-meta-text">2</div>
+                        </div>
+                    </div>@if (item.Slike.Count > 0)
+                    {<a class="post-classic-figure" asp-action="Detalji" asp-route-id="@item.Id"><img src="/@item.Slike.First().Url" alt="" width="770" height="430" /></a>}
+                    <p class="d-flex mb-0 d-block">
+                        <input type="button" id="@("whish" + item.Id)" class="btn btn-primary py-2 ml-1" onclick="AddItem('@item.Id')" value="Add to wishlist" />
+                    </p>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#emailModal">
+                        Pošalji upit
+                    </button>
+                </article>
+
+                }
+                <div class="pagination-wrap">
+                    <!-- Bootstrap Pagination-->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item page-item-control disabled"><a class="page-link" href="#" aria-label="Previous"><span class="icon" aria-hidden="true"></span></a></li>
+                            <li class="page-item active"><span class="page-link">1</span></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">4</a></li>
+                            <li class="page-item page-item-control"><a class="page-link" href="#" aria-label="Next"><span class="icon" aria-hidden="true"></span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Post Sidebar-->
+                <div class="post-sidebar post-sidebar-inset">
+                    <div class="row row-lg row-60">
+                        <div class="col-sm-6 col-lg-12">
+                            <div class="post-sidebar-item">
+                                <!-- RD Search Form-->
+                                <form class="rd-search form-search form-post-search" action="search-results.html" method="GET">
+                                    <div class="form-wrap">
+                                        <label class="form-label" for="search-form">Search...</label>
+                                        <input class="form-input" id="search-form" type="text" name="s" autocomplete="off">
+                                        <button class="button-search fl-bigmug-line-search74" type="submit"></button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="post-sidebar-item">
+                                <h6 class="text-uppercase">categories</h6>
+                                <div class="post-sidebar-item-inset">
+                                    <ul class="list list-categories">
+                                        @foreach (var item in ProizvodjaciList)
+                                        {
+                                            if (item.Naziv == ProizvodjaciFilter)
+                                            {
+                                                <li><a class="active" asp-route-proizvodjac="@item.Naziv">@item.Naziv</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a asp-route-proizvodjac="@item.Naziv">@item.Naziv</a></li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="post-sidebar-item">
+                                <h6 class="text-uppercase">filter by price</h6>
+                                <div class="post-sidebar-item-inset">
+                                    <div class="group-xs justify-content-start">
+                                        <a class="badge badge-white" href="#">
+                                            <svg xmlns="https://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="27px" viewbox="0 0 16 27" enable-background="new 0 0 16 27" xml:space="preserve">
+                                            <path d="M0,0v6c4.142,0,7.5,3.358,7.5,7.5S4.142,21,0,21v6h16V0H0z"></path>
+                            </svg>
+                                            <div>$0-$100</div>
+                                        </a><a class="badge badge-white" href="#">
+                                            <svg xmlns="https://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="27px" viewbox="0 0 16 27" enable-background="new 0 0 16 27" xml:space="preserve">
+                                            <path d="M0,0v6c4.142,0,7.5,3.358,7.5,7.5S4.142,21,0,21v6h16V0H0z"></path>
+                            </svg>
+                                            <div>$100-$220</div>
+                                        </a><a class="badge badge-white" href="#">
+                                            <svg xmlns="https://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="27px" viewbox="0 0 16 27" enable-background="new 0 0 16 27" xml:space="preserve">
+                                            <path d="M0,0v6c4.142,0,7.5,3.358,7.5,7.5S4.142,21,0,21v6h16V0H0z"></path>
+                            </svg>
+                                            <div>$200-$400</div>
+                                        </a><a class="badge badge-white" href="#">
+                                            <svg xmlns="https://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="27px" viewbox="0 0 16 27" enable-background="new 0 0 16 27" xml:space="preserve">
+                                            <path d="M0,0v6c4.142,0,7.5,3.358,7.5,7.5S4.142,21,0,21v6h16V0H0z"></path>
+                            </svg>
+                                            <div>$400-$1k</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                       
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function AddItem(id) {
+         $.ajax({
+             type: "POST",
+             url: "/wishlist/additem/" + id,
+             success: function (result) {
+                 if (result === true) {
+                     $("#whish" + id).val("Saved");
+                 }
+                 else {
+                     console.log("Snimanje nije uspjelo");
+                 }
+             }
+         });
+    }
+</script>

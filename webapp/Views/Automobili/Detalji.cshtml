@@ -1,0 +1,112 @@
+﻿@model rentacar.ViewModels.CarCommentViewModel
+
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Detalji";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var ratingSum = ViewBag.RatingSum;
+    var ratingCount = ViewBag.RatingCount;
+
+    decimal rating = 0;
+    if (ratingCount > 0)
+    {
+        rating = (ratingSum / ratingCount);
+    }
+
+    var totalRating = decimal.Parse(rating.ToString());
+
+    var IsSignedIn = SignInManager.IsSignedIn(this.User);
+}
+
+<!-- Single Project-->
+<section class="section section-sm section-first bg-default">
+    <div class="container">
+        <div class="row row-50 justify-content-center align-items-xl-center">
+            <div class="col-md-10 col-lg-6 col-xl-7">
+                <div class="offset-right-xl-15">
+                    <!-- Owl Carousel-->
+                    <div class="owl-carousel owl-dots-white" data-items="1" data-dots="true" data-autoplay="true" data-animation-in="fadeIn" data-animation-out="fadeOut">
+                        @for (int i = 0; i < Model.CarFeatures.Pictures.Count; i++)
+                        {<img src="/@Model.CarFeatures.Pictures[i].Url" alt="" />}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 col-lg-6 col-xl-5">
+                <div class="single-project">
+                    <h4>@Model.CarFeatures.CarName</h4>
+                    <p class="text-gray-500">@Model.CarFeatures.Description</p>
+                    <div class="divider divider-30"></div>
+                    <ul class="list list-description d-inline-block d-md-block">
+                        <li><span>Proizvođač:</span><span>@Model.CarFeatures.Manufacturer</span></li>
+                        <li><span>Kategorija:</span><span>@Model.CarFeatures.Category.Naziv</span></li>
+                    </ul>
+                    <div class="divider divider-30"></div>
+
+                    <div class="list list-description d-inline-block d-md-block col-md-12">
+
+                        <h5 class="text-left" style="margin-top: 20px;">Karakteristike automobila</h5>
+                        <div class="row" style="margin-top: 20px">
+                            @for (int i = 0; i < Model.CarFeatures.Features.Count; i++)
+                            {
+                @if (i % 2 == 0)@Html.Raw("<div class=\"col-xs-12 col-md-6\">");
+
+<ul>
+    <li><span class="material-icons-done"></span><span>@Model.CarFeatures.Features.ElementAt(i).Naziv </span></li>
+</ul> if (i % 2 == 1) @Html.Raw("</div>");
+}
+
+                        </div>
+                    </div>
+                    <div class="divider divider-30"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section ftco-car-details">
+    <div class="row">
+        <div class="col-md-12 pills">
+            <div class="bd-example bd-example-tabs">
+
+                @foreach (var c in Model.ListOfComments)
+                {
+    <hr />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <i>@c.DatumIzdavanja.ToString("dd.MM.yyyy")</i>
+                            <i>@c.Korisnik.Ime @c.Korisnik.Prezime</i>
+                            <div class="commentStarsBox" style="margin-left: 50px">
+                                @{ int gray = 5 - c.Ocjena;
+                                    for (int i = 1; i <= c.Ocjena; i++)
+                                    {
+                        <div class="starGlowN"></div> }
+
+                    for (int j = 0; j < gray; j++)
+                    {
+                        <div class="starFadeN"></div> } }
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-9 text-left">
+                            @Html.Raw(c.Komentar.Replace("\n", "<br />"))
+                        </div>
+                    </div>}
+                <hr />
+                @if (IsSignedIn)
+                {
+                <partial name="_CommentBox" />
+                }
+                else
+                {
+                    <p class="m-5">Da bi ste postavili komentar, potrebno je da se prvo <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnurl="/Automobili/Detalji/@Model.CarId">prijavite</a>.</p>
+                }
+            </div>
+        </div>
+    </div>
+</section>

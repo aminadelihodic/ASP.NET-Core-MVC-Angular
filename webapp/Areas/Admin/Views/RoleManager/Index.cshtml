@@ -1,0 +1,48 @@
+﻿@model List<Microsoft.AspNetCore.Identity.IdentityRole>
+@{
+    ViewData["Title"] = "Role Manager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+<section class="section-lg bg-default">
+    <div class="container">
+        <h1 style="margin-top: 12px; margin-bottom: 12px;">Uloge</h1>
+        <form method="post" asp-action="AddRole" asp-controller="RoleManager">
+            <div class="input-group">
+                <input name="roleName" class="form-control w-25">
+                <span class="input-group-btn">
+                    <button class="btn btn-info">Dodaj novu ulogu</button>
+                </span>
+            </div>
+        </form>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Uloge</th>
+                    <th>Akcija</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model)
+                {
+                <tr>
+                    <td>@role.Name</td>
+                    <td> <a asp-action="Edit" asp-route-id="@role.Id">Uredi</a> |
+                     <a class="delete-link" href="#" data-id="@role.Id">Obriši</a></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+</section>
+
+@section Scripts {
+    <script>
+        $('.delete-link').click(function (event) {
+            if (confirm('Da li ste sigurni da želite izbrisati ulogu?')) {
+                var RoleId = $(this).data('id');
+                window.location = '/Admin/RoleManager/Delete/' + RoleId;
+            }
+            return false;
+        });
+    </script>
+}
