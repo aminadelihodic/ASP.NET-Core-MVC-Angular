@@ -55,7 +55,7 @@ export class PrikaziProizvodjaceComponent implements OnInit {
 
   
 
-  pretragaImePrezime() {
+  pretragaNaziv() {
     this.preuzmiPodatke();
   }
 
