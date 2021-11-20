@@ -1,0 +1,67 @@
+﻿@model StatistikaIznajmljivanjaVM
+@using System.Text.Json;
+
+@{
+    ViewData["Title"] = "Statistika o iznamljivanjima po mjesecima";
+}
+
+<h4 style="margin-top: 10px;">@ViewData["Title"]</h4>
+
+
+
+<div style="width: 500px; padding: 20px; margin: 0 auto">
+    <form method="post">
+        Godina:
+        <select asp-for="Godina" asp-items="Model.GodineList"></select>
+
+        <button class="btn btn-primary" style="
+        height: 30px;
+        padding: 10px;
+        background: rgb(255, 99, 132);
+        line-height: 8px;
+        border: 0;
+        ">
+            Odaberi
+        </button>
+    </form>
+
+    <canvas id="myChart" width="520" height="420" style="margin: 0 auto;"></canvas>
+</div>
+
+@section Scripts{
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                 labels: @Html.Raw(JsonSerializer.Serialize(Model.MjeseciList)),
+                datasets: [
+
+                 @foreach (var automobil_statistika in Model.Statistika) {
+
+                    @Html.Raw("{")
+                    @Html.Raw("label: " + JsonSerializer.Serialize(automobil_statistika.NazivAutomobila) + ",")
+                    @Html.Raw("data: " + JsonSerializer.Serialize(automobil_statistika.BrojIznajmljivanjaByMonth) + ",")
+                    @Html.Raw("fill: false")
+                    @Html.Raw("},")
+                    }
+
+                 ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    colorschemes: {
+                        scheme: 'brewer.Paired12'
+                    }
+                }
+            }
+        });
+    </script>
+
+}

@@ -67,11 +67,12 @@
                                             <ul class="rd-menu rd-navbar-dropdown">
                                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="Admin" asp-controller="Korisnici" asp-action="Index">Korisnici</a></li>
                                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="Admin" asp-controller="Izvjestaj" asp-action="Index">Izvještaj</a></li>
+                                                <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="Admin" asp-controller="StatistikaIznajmljivanja" asp-action="Index">Statistika iznajmljivanja</a></li>
                                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="Admin" asp-controller="RoleManager" asp-action="Index">Uloge</a></li>
                                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="Admin" asp-controller="Automobil" asp-action="Index">Automobili</a></li>
                                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="Admin" asp-controller="Proizvodjaci" asp-action="Index">Proizvođači</a></li>
                                                 <li class="rd-dropdown-item"><a class="rd-dropdown-link" asp-area="Admin" asp-controller="DetaljiKarakteristika" asp-action="Index">Detalji karakteristika</a></li>
-                                                <li class="rd-nav-item"><a class="rd-dropdown-link"  asp-controller="Vijesti" asp-action="Index">Vijesti </a></li>
+                                                <li class="rd-nav-item"><a class="rd-dropdown-link" asp-controller="Vijesti" asp-action="Index">Vijesti </a></li>
                                             </ul>
                                         </li>
                                     }
@@ -188,7 +189,9 @@
     <script src="/js/core.min.js"></script>
     <script src="/js/script.js"></script>
     <script src="/js/JFIT.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/lib/chartjs-plugin/chartjs-plugin-colorschemes.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
