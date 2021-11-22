@@ -35,7 +35,7 @@
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                 labels: @Html.Raw(JsonSerializer.Serialize(Model.MjeseciList)),
+                labels: @Html.Raw(JsonSerializer.Serialize(Model.MjeseciList)),
                 datasets: [
 
                  @foreach (var automobil_statistika in Model.Statistika) {
@@ -45,9 +45,10 @@
                     @Html.Raw("data: " + JsonSerializer.Serialize(automobil_statistika.BrojIznajmljivanjaByMonth) + ",")
                     @Html.Raw("fill: false")
                     @Html.Raw("},")
-                    }
+                    @Html.Raw("\n")
+                 }
 
-                 ]
+                ]
             },
             options: {
                 scales: {
