@@ -18,12 +18,6 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="car-details">
-                    <div class="fotorama rounded-lg mt-2 mb-1 " data-width="100%" data-nav="thumbs">
-                        @for (int i = 0; i < Model.CarFeatures.Pictures.Count; i++)
-                        {
-            <img class="rounded" src="@Model.CarFeatures.Pictures[i].Url">;
-        }
-                    </div>
                     <div class="text text-center">
                         <h2>@Model.CarFeatures.CarName</h2>
                         <span class="p-3 mb-2 ml-2 bg-light rounded-pill text-primary font-weight-bold">@Model.CarFeatures.Price<span>KM</span></span>

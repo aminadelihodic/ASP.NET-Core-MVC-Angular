@@ -41,25 +41,32 @@ namespace rentacar.Areas.Admin.Controllers
 
             var AutomobiliList = _context.Automobil.ToList();
 
+            
             for (int i = 1; i <= 12; i++)
             {
+                
                 string monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(i);
                 VM.MjeseciList.Add(monthName);
 
+                
                 foreach (var automobil in AutomobiliList)
                 {
+                    
                     int BrojIznajmljivanja = _context.Ugovor
                         .Where(x => x.Datum.Year == VM.Godina)
                         .Where(x => x.Datum.Month == i && x.AutomobilId.Value == automobil.Id)
                         .Count();
 
+                    
                     var postojecaStatistika = VM.Statistika.Where(x => x.NazivAutomobila == automobil.Naziv).FirstOrDefault();
                     if(postojecaStatistika != null)
                     {
+                        
                         postojecaStatistika.BrojIznajmljivanjaByMonth.Add(BrojIznajmljivanja);
                     }
                     else
                     {
+                        
                         VM.Statistika.Add(new AutomobilStatistikaGrupisanoVM
                         {
                             NazivAutomobila = _context.Automobil.Find(automobil.Id).Naziv,

@@ -128,7 +128,7 @@ namespace rentacar.Controllers
 
             MailHelper.SendMail("razvoj.softvera1@gmail.com", message, ccMail);
 
-            return RedirectToAction("Index", "Automobili");
+            return  RedirectToAction("Index", "Automobili");
         }
     }
 }

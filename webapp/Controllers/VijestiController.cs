@@ -71,19 +71,5 @@ namespace rentacar.Areas.Admin.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        public IActionResult Details(int id)
-        {
-            NewsViewModel model = _context.Novosti.Where(w => w.Id == id).Select(s => new NewsViewModel()
-            {
-                Sadrzaj = s.Sadržaj,
-                DatumKreiranja = s.DatumKreiranja,
-                ImagePath = s.ImagePath,
-                Naslov = s.Naslov
-            }).Single();
-            return View(model);
-        }
-
-        
     }
 }

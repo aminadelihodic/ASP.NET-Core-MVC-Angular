@@ -9,7 +9,7 @@ namespace rentacar.Services
 {
     public class MailHelper
     {
-        public static void SendMail(string emailTo, string message, string ccMail)
+        public static void SendMail(string emailTo, string message, string ccMail )
         {
             SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
             SmtpServer.Port = 587;

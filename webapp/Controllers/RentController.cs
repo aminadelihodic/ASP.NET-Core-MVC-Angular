@@ -26,7 +26,7 @@ namespace rentacar.Controllers
 
         public IActionResult Index()
         {
-            ViewData["porka"] = TempData["nesto"];
+            ViewData["poruka"] = TempData["nesto"];
             return View();
         }
         public bool IsAvailable(int carId, DateTime fromDate, DateTime toDate)
